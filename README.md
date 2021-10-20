@@ -8,7 +8,7 @@ does not actually check for passwords.  In this exercise, we explore how passwor
 The simplest way to store passwords is by storing it as simple name-value pairs, something like this passwd_plain.txt.
 
 Make a copy of the 02-hmac-token.sh script, call it q1.sh, and modify it so that your script would check both the 
-username and password against the password file passwd_plain.txt.
+username and password against the password file [passwd_plain.txt](passwd_plain.txt.).
 
 If the id/password combination does not exist in the passwd_plain.txt file, you will return status 401.  
 Otherwise, your script would return a JWT token.
@@ -46,9 +46,9 @@ you can grep the hash to make your program faster.
 ## Q4
 To mitigate the "rainbow table" attack highlighted in Q3, passwords are usually "salted".
 
-According to the video, the current best practice is to use the blowfish/bcrypt algorithm where the password and 
-salt are generated together.  The htpasswd command will produce such a password for you.  You can run the htpasswd 
-command as follows:
+The current best practice is to use the blowfish/bcrypt algorithm where the password and 
+salt are generated together.  The htpasswd command will produce such a password for you.  
+You can run the htpasswd command as follows:
 
 ```
 [root@ip-172-31-18-4 password-lessons]# htpasswd -2nb env3d 12345
@@ -66,5 +66,5 @@ Notice how the htpasswd command outputs a different hash value for the same pass
 salt is integrated into the password hash itself.
 
 The file passwd_salted.txt contains passwords encrypted using htpasswd as seen above.  Create a copy of your q2.sh 
-script and call it q4.sh, then modify q4.sh script to work with passwd_salted.txt.
+script and call it q4.sh, then modify q4.sh script to work with [passwd_salted.txt](passwd_salted.txt).
 
