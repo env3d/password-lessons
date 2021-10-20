@@ -36,8 +36,11 @@ However, since we are using a simple sha256sum, the hacker can still recover the
 running sha256sum on a potential set of passwords, then comparing it against the password file.  A naive 
 approach can be found in [naive_crack.sh](naive_crack.sh).
 
-Write a script to recover all the passwords using the "rainbow table" concept mentioned in the video, where 
-instead of recomputing the sha256sum every single loop, we pre-compute them before the loop begins.  
+When you pre-compute hashes in order to perform a brute force attack (aka dictionary attack), the 
+pre-computed hash is called a "rainbow table".  
+
+Write a script to recover all the passwords using this "rainbow table" concept.
+Instead of recomputing the sha256sum every single loop, we pre-compute them before the loop begins.  
 Call this solution q3.sh.
 
 HINT: double loops are very slow, but grep is very fast.  Once you have computed the "rainbow table", 
