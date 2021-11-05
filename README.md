@@ -71,3 +71,19 @@ salt is integrated into the password hash itself.
 The file passwd_salted.txt contains passwords encrypted using htpasswd as seen above.  Create a copy of your q2.sh 
 script and call it q4.sh, then modify q4.sh script to work with [passwd_salted.txt](passwd_salted.txt).
 
+### HINT
+
+You will want to use htpasswd to verify passwords.  When the verification succeed, htpasswd will have an exit 
+code of 0.  If the verification fails, the exit code is 3.  Look at the following output to see how
+you can test the exit code of htpasswd:
+
+```
+[root@ip-172-31-18-4 password-lessons]# htpasswd -vb passwd_salted.txt jason 12345
+Password for user jason correct.
+[root@ip-172-31-18-4 password-lessons]# echo $?
+0
+[root@ip-172-31-18-4 password-lessons]# htpasswd -vb passwd_salted.txt jason 1234
+password verification failed
+[root@ip-172-31-18-4 password-lessons]# echo $?
+3
+```
