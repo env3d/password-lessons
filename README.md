@@ -50,40 +50,36 @@ you can grep the hash to make your program faster.
 To mitigate the "rainbow table" attack highlighted in Q3, passwords are usually "salted".
 
 The current best practice is to use the blowfish/bcrypt algorithm where the password and 
-salt are generated together.  The htpasswd command will produce such a password for you.  
-You can run the htpasswd command as follows:
+salt are generated together.  The openssl command will produce such a password for you.  
+You can run the openssl command as follows:
 
 ```
-[root@ip-172-31-18-4 password-lessons]# htpasswd -2nb env3d 12345
-env3d:$5$EKpIoAn6/Fa4az0r$SAc/saS7k.iQKr08aC/tiehRycNjh9X7DxfWbvNXU50
+[ec2-user@ip-172-31-13-169 password-lessons]$ openssl passwd -1 12345
+$1$X4gWLB5H$MBKnn5VEYuyoN6cS7bQo2/
 
-[root@ip-172-31-18-4 password-lessons]# htpasswd -2nb env3d 12345
-env3d:$5$iLuYwBhaV4SGHp7n$18ZDkoM6PAxdVzqyOlnzwz1dNcPU1hUALp/G75yehf6
+[ec2-user@ip-172-31-13-169 password-lessons]$ openssl passwd -1 12345
+$1$/6avCSjQ$6A31CMaSwmmzOxYlpHxrY1
 
-[root@ip-172-31-18-4 password-lessons]# htpasswd -2nb env3d 12345
-env3d:$5$gOLbcOf6yHD3sDBZ$ozMfPL67V/CAVUfIgdQeVL4voqaLWOH7jwLpsh0b9A7
-
+[ec2-user@ip-172-31-13-169 password-lessons]$ openssl passwd -1 12345
+$1$vN2MROPo$7pZX4h7r2v1KrCJJ8ndAb/
 ```
 
-Notice how the htpasswd command outputs a different hash value for the same password?  That's because the random 
-salt is integrated into the password hash itself.
+Notice how the output has different hash value for the same password?  That's because the random 
+salt is integrated into the password hash itself.  The output string is delimited by the $ character and
+has the following format:
+
+${algorithm}${salt}${hash}
+
+We use the -1 algorithm to encrypt passwords, and the salt value is randomly assigned.
+
+If we know the salt, we can verify a password by providing a specific salt value to openssl,
+as follows:
+
+```
+[ec2-user@ip-172-31-13-169 password-lessons]$ openssl passwd -1 -salt vN2MROPo 12345
+$1$vN2MROPo$7pZX4h7r2v1KrCJJ8ndAb/
+```
 
 The file passwd_salted.txt contains passwords encrypted using htpasswd as seen above.  Create a copy of your q2.sh 
 script and call it q4.sh, then modify q4.sh script to work with [passwd_salted.txt](passwd_salted.txt).
 
-### HINT
-
-You will want to use htpasswd to verify passwords.  When the verification succeed, htpasswd will have an exit 
-code of 0.  If the verification fails, the exit code is 3.  Look at the following output to see how
-you can test the exit code of htpasswd:
-
-```
-[root@ip-172-31-18-4 password-lessons]# htpasswd -vb passwd_salted.txt jason 12345
-Password for user jason correct.
-[root@ip-172-31-18-4 password-lessons]# echo $?
-0
-[root@ip-172-31-18-4 password-lessons]# htpasswd -vb passwd_salted.txt jason 1234
-password verification failed
-[root@ip-172-31-18-4 password-lessons]# echo $?
-3
-```

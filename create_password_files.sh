@@ -43,10 +43,10 @@ paste -d ':' <(echo "$COMMON_USERNAMES") <(echo "$SHASUMS") > passwd_sha.txt
 SALTED=$(    
     for I in $COMMON_USERNAMES
     do	
-	echo "$COMMON_PASSWORDS" | tail -n +$(( $RANDOM % 10 )) | head -n 1 | xargs -I {} htpasswd -2nb $I {}
+	echo "$COMMON_PASSWORDS" | tail -n +$(( $RANDOM % 10 )) | head -n 1 | xargs -I {} openssl passwd -1 {}
 #	echo $I
     done
 )
 
-echo "$SALTED" | grep -v '^$' > passwd_salted.txt
+paste -d ':' <(echo "$COMMON_USERNAMES") <(echo "$SALTED") > passwd_salted.txt
 
