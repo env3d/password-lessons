@@ -80,6 +80,6 @@ as follows:
 $1$vN2MROPo$7pZX4h7r2v1KrCJJ8ndAb/
 ```
 
-The file passwd_salted.txt contains passwords encrypted using htpasswd as seen above.  Create a copy of your q2.sh 
+The file passwd_salted.txt contains passwords encrypted using `openssl passwd` as seen above.  Create a copy of your q2.sh 
 script and call it q4.sh, then modify q4.sh script to work with [passwd_salted.txt](passwd_salted.txt).
 
