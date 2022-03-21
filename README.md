@@ -19,6 +19,7 @@ Deploy the script to a web server, and provide an example curl call.
 Using plain text to store passwords is very insecure.  If a malicious hacker got a hold of the file, 
 the hacker would gain access to all the actual passwords.  A better way to store passwords is to store 
 them as hashes.  The file [passwd_sha.txt](passwd_sha.txt) stores passwords as sha256sum.  
+
 Since sha256sum is a one-way hash, getting a hold of the password file does not mean you’ll have access 
 to the actual password.
 
@@ -70,7 +71,7 @@ has the following format:
 
 ${algorithm}${salt}${hash}
 
-We use the -1 algorithm to encrypt passwords, and the salt value is randomly assigned.
+We use the algorithm "1" to encrypt passwords, and the salt value is randomly assigned.
 
 If we know the salt, we can verify a password by providing a specific salt value to openssl,
 as follows:
